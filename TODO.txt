@@ -1,0 +1,33 @@
+Bob - An adventure RPG!
+
+1. Opening/Closing Menu
+2. Create main character as a sprite 
+3. Start working on movement/ collision detection
+4. Start on a script to import the maps from PyMap
+5. Create a file to save settings and variables to
+
+==========Structure========================
+
+1. Opening Screen
+2. Settings *
+3. Load Game / New Game *
+4. Begin game loop
+-Scene change animation
+-If music == Already playing, keep playing
+-else, start music
+
+-Draw map
+-Define areas that can be occupied
+-Draw hero
+-Draw other sprites
+-Define interaction with sprites
+-Take user input
+--if input == arrow key
+---if that direction is occupiable, move there
+---if that tile is a map_change tile, change map
+---else, nothing
+--if input == action key
+---if within 1 tile of interactable sprite, interact with sprite
+---else, nothing
+
+* can be added later
