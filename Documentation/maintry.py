@@ -15,19 +15,15 @@ FPS = 20
 
 pygame.image.get_extended()
 
-icon = pygame.image.load("resources/images/gameicon.jpg")
-
-gameDisplay = pygame.display.set_mode((display_width, display_height))
-pygame.display.set_icon(icon)
 pygame.display.set_caption("Adventures of Bob")
 
 gameExit = False
 
 clock = pygame.time.Clock()
 
-pygame.mixer.music.load("resources/music/gamemusic.ogg")
-pygame.mixer.music.set_volume(.5)
-pygame.mixer.music.play(loops = -1)
+#pygame.mixer.music.load("resources/music/gamemusic.ogg")
+#pygame.mixer.music.set_volume(.5)
+#pygame.mixer.music.play(loops = -1)
 
 lead_x = display_width/2
 lead_x_change = 0

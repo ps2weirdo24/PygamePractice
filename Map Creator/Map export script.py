@@ -14,16 +14,17 @@ class game_map:
 		self.tiledata = []
 		
 
-	def load_map(self, filename):
-		self.filename = filename
-		map_file = open(filename)
+	def load_map(self, input_filename, tileset_filename, output_filename):
+		self.outputname = str(output_filename)
+		self.filename = input_filename
+		map_file = open(input_filename)
 		raw_map = map_file.readlines()
 		map_file.close()
 
 		self.layers = int(raw_map[0])
 		self.resolution = (raw_map[1]).split(",")
 		self.mapsize = (raw_map[2]).split(",")
-		self.tilesetname = "resources/map/tiles/%s.png" % str(raw_map[4][0:len(raw_map[4])-1])
+		self.tilesetname = str(tileset_filename)
 		self.tiledata = []
 		raw_map_trim = raw_map[6:int(len(raw_map)-1)]
 		raw_map_3d = []
@@ -55,7 +56,7 @@ class game_map:
 			self.master_surface.blit(tile_source, (wx,wy), (wq, ww, we, wr))
 
 
-		pygame.image.save(self.master_surface, "Level1.bmp")
+		pygame.image.save(self.master_surface, self.outputname)
 		print "Map Saved!"
 
 
@@ -67,7 +68,8 @@ class game_map:
 
 
 
-map_file_name = "resources/map/Level1.txt"
+map_file_name1 = "resources/map/map_3/txtmap_3.txt"
 
-myscene = game_map()
-myscene.load_map(map_file_name)
+
+myscene1 = game_map()
+myscene1.load_map(map_file_name1, "mappic_3.bmp")

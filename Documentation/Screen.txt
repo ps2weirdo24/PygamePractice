@@ -1,0 +1,7 @@
+Total screen = 704 x 704
+
+Total map = 704 x 640
+-24 x 20 tiles
+-32 x 32 pixels per tiles
+
+Hud = 704 x 64

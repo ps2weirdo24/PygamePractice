@@ -1,0 +1,14 @@
+mypygamerpg
+
+1. Opening/Closing Menu
+2. Create main character as a sprite 
+3. Start working on movement/ collision detection
+4. Start on a script to import the maps from PyMap
+5. Create a file to save settings and variables to
+
+==========Specs========================
+
+Maps
+-Tile Width, Height == 22,20
+-Pixel Width, Height == 32,32
+ 
