@@ -5,3 +5,8 @@ Total map = 704 x 640
 -32 x 32 pixels per tiles
 
 Hud = 704 x 64
+
+====Game Style====
+
+GIMP Palette = Firecode
+Font = Franklin Gothic Heavy

@@ -7,7 +7,9 @@ pygame.image.get_extended()
 
 
 origin_file_dict = {"hud":"Resources/images/img_hud.bmp", 
-			 "start_screen":"Resources/images/img_start_screen.bmp",
+			 "menu":"Resources/images/img_menu.bmp",
+			 "menu_cursor":"Resources/images/img_menu_cursor2.bmp",
+			 "plain_menu":"Resources/images/img_plain_menu.bmp",
 			 "map_1":"Resources/map/map_1/img_map_1.bmp",
 			 "map_2":"Resources/map/map_2/img_map_2.bmp",
 			 "map_3":"Resources/map/map_3/img_map_3.bmp",
@@ -27,20 +29,19 @@ class ImageHandler():
 		self.surface_dict = {}
 		for pairs in self.file_dir.items():
 			self.surface_dict[str(pairs[0])] = pygame.image.load(str(pairs[1]))
-		print "Images were loaded sucessfully"
 
 	def get(self, str_key):
 		this_key = str(str_key)
 		if self.surface_dict.has_key(this_key):
 			return self.surface_dict[this_key]
 		else:
-			print "The key '%s' was not found in the ImageHandler Directory" % this_key
+			print "ERROR: The key '%s' was not found in the ImageHandler Dictionary" % this_key
+
+	def get_all(self):
+		return self.file_dir
 
 
 
 
 
 
-
-
-			
