@@ -2,14 +2,19 @@
 # This module will want to be updated often as the structure of folders will change
  
 import pygame
+import os
 
 pygame.image.get_extended()
+
+sfx_dir = "Resources/audio/sound_effects"
+music_dir = "Resources/audio/music"
+
 
 
 origin_file_dict = {"hud":"Resources/images/img_hud.bmp", 
 			 "menu":"Resources/images/img_menu.bmp",
 			 "menu_cursor":"Resources/images/img_menu_cursor2.bmp",
-			 "plain_menu":"Resources/images/img_plain_menu.bmp",
+			 "plain_menu":"Resources/images/img_title_screen.bmp",
 			 "map_1":"Resources/map/map_1/img_map_1.bmp",
 			 "map_2":"Resources/map/map_2/img_map_2.bmp",
 			 "map_3":"Resources/map/map_3/img_map_3.bmp",
@@ -43,5 +48,36 @@ class ImageHandler():
 
 
 
+
+class SoundHandler():
+
+	def __init__(self):
+		if pygame.mixer.get_init() == None:
+			pygame.mixer.init()
+		else:
+			pass
+		find_sfx_list = os.listdir(sfx_dir)
+		find_music_list = os.listdir(music_dir)
+		self.sfx_dict = {}
+		self.music_dict = {}
+		for item in find_sfx_list:
+			new_item = (sfx_dir + "/" + item)
+			self.sfx_dict[item[0:(len(item)-4)]] = new_item
+		for item in find_music_list:
+			new_item = (music_dir + "/" + item)
+			self.music_dict[item[0:(len(item)-4)]] = new_item
+
+	def load(self, sound_filename):
+		"""
+		This will return a pygame.Sound object
+		"""
+		if sound_filename in self.sfx_dict:
+			file_to_load = self.sfx_dict[sound_filename]
+		elif sound_filename in self.music_dict:
+			file_to_load = self.music_dict[sound_filename]
+		else:
+			file_to_load = sound_filename
+
+		return pygame.mixer.Sound(file_to_load)
 
 

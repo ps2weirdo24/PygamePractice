@@ -8,6 +8,10 @@ import rpgResourceLoader
 FPS = 20
 Clock = pygame.time.Clock()
 img = rpgResourceLoader.ImageHandler()
+mixer = rpgResourceLoader.SoundHandler()
+
+cursor_sound = mixer.load("aud_menu_select")
+select_sound = mixer.load("aud_menu_confirm")
 
 
 class Menu:
@@ -37,23 +41,27 @@ class Menu:
 
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_a:
+					cursor_sound.play()
 					pass
 				elif event.key == pygame.K_d:
+					cursor_sound.play()
 					pass
-				
 				elif event.key == pygame.K_w:
+					cursor_sound.play()
 					if self.current_option == 0:
 						pass
 					else:
 						self.current_option = (self.current_option - 1)
 					
 				elif event.key == pygame.K_s:
+					cursor_sound.play()
 					if self.current_option == self.total_options:
 						pass
 					else:
 						self.current_option = (self.current_option + 1)
 					
 				elif event.key == pygame.K_RETURN:
+					select_sound.play()
 					self.user_selection = str(self.options[int(self.current_option)])
 					self.selection_made = True
 					
@@ -65,17 +73,15 @@ class Menu:
 
 	def render(self):
 		self.source_surface.blit(self.base_surface, (0,0))
-		ptext.draw(self.title, top=64, centerx=352, 
-					fontname="Resources/fonts/vgasys.fon", fontsize = 72.0, color="black")
-		loop_x = 256
-		loop_y = 352
+		ptext.draw(self.title, top=64, centerx=352, fontsize = 72.0, color="black")
+		loop_x = 352
+		loop_y = 256
 		for item in self.options:
-			ptext.draw(str(item), top=loop_x, centerx=loop_y,
-						fontname="Resources/fonts/vgasys.fon", fontsize = 48, color="black")
-			loop_x = (loop_x + 64)
-		arrow_x = (64*int(self.current_option)) + 246
-		arrow_y = int(loop_y - 128)
-		self.source_surface.blit(self.cursor, (arrow_y, arrow_x))
+			ptext.draw(str(item), centerx=loop_x, centery=loop_y, fontsize = 48, color="black")
+			loop_y = (loop_y + 64)
+		arrow_y = (64*int(self.current_option)) + 256 - (int(self.cursor.get_height())/2)
+		arrow_x = int(loop_x - 152)
+		self.source_surface.blit(self.cursor, (arrow_x, arrow_y))
 
 
 	
