@@ -29,8 +29,8 @@ class Menu:
 		self.user_selection = None
 
 		
-		self.base_surface = img.get("plain_menu")
-		self.cursor = img.get("menu_cursor")
+		self.base_surface = img.get("Resources/images/img_title_screen.bmp")
+		self.cursor = img.get("Resources/images/img_menu_cursor2.bmp")
 
 		
 

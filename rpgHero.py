@@ -139,30 +139,17 @@ class Hero:
 	def move(self, direction):
 		if self.facing == direction:
 			if direction == "left":
-				if self.pos_x == 1:
-					pass
-				else:
-					self.pos_x = (self.pos_x - 1)
-					self.step_sound()
+				self.pos_x = (self.pos_x - 1)
+				self.step_sound()
 			elif direction == "up":
-				if self.pos_y == 2:
-					pass
-				else:
-					self.animate_up.play()
-					self.pos_y = (self.pos_y - 1)
-					self.step_sound()
+				self.pos_y = (self.pos_y - 1)
+				self.step_sound()
 			elif direction == "right":
-				if self.pos_x == 20:
-					pass
-				else:
-					self.pos_x = (self.pos_x + 1)
-					self.step_sound()
+				self.pos_x = (self.pos_x + 1)
+				self.step_sound()
 			elif direction == "down":
-				if self.pos_y == 18:
-					pass
-				else:
-					self.pos_y = (self.pos_y + 1)
-					self.step_sound()
+				self.pos_y = (self.pos_y + 1)
+				self.step_sound()
 
 		else:
 			self.facing = direction
@@ -177,15 +164,6 @@ class Hero:
 		elif self.facing == "down":
 			self.idle_img = self.animate_down
 
-class Game_Map:
-	def __init__(self):
-
-		self.width = 22
-		self.height = 20
-		self.current_map = "map_1"
-		self.map_surface = img.get("Resources/map/map_1/img_map_1.bmp")
-
-
 
 
 
@@ -194,6 +172,6 @@ class Game_Map:
 
 if __name__ == "__main__":
 	my_test = Hero()
-	my_test2 = Game_Map()
+	
 
 

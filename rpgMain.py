@@ -2,13 +2,14 @@ import pygame
 import ptext
 import rpgScene
 import rpgResourceLoader
-import rpgBrains
+import rpgHero
+import rpgMap
 
 pygame.init()
 
 DISPLAY_W = 768
 DISPLAY_H = 768
-FPS = 20
+FPS = 60
 
 pygame.image.get_extended()
 
@@ -19,6 +20,7 @@ Clock = pygame.time.Clock()
 
 my_mixer = rpgResourceLoader.SoundHandler()
 img = rpgResourceLoader.ImageHandler()
+my_map = rpgMap.MapHandler()
 
 hud_img = img.get("Resources/images/img_rpg_gui_new.png")
 
@@ -34,19 +36,18 @@ def game_loop():
 	main_dipslay.blit(hud_img, (0,0))
 
 	while 1:
+		process_game_state()
 		render()
 		hero.update()
 		take_input()
 		pygame.display.update()
 		Clock.tick(FPS)
 
-
 def render():
-	base_layer = game_map.map_surface.copy()
+	base_layer = my_map.get_surface().copy()
 	charx = int(hero.pos_x * 32)
 	chary = int((hero.pos_y - 1) * 32)
 	hero.idle_img.blit(base_layer, (charx, chary))
-	#hero.animate_up.blit(base_layer, (charx, chary))
 	main_dipslay.blit(base_layer, (32,32))
 
 def take_input():
@@ -56,37 +57,54 @@ def take_input():
 
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_a:
-				#
-				hero.move("left")
+				hero.facing = "left"
+				if my_map.can_move_to((hero.pos_x-1), hero.pos_y):
+					hero.move("left")
+				else:
+					pass
 
 			elif event.key == pygame.K_d:
-				#
-				hero.move("right")
+				hero.facing = "right"
+				if my_map.can_move_to((hero.pos_x+1), hero.pos_y):
+					hero.move("right")
+				else:
+					pass
 
 			elif event.key == pygame.K_w:
-				#
-				hero.move("up")
-
+				hero.facing = "up"
+				if my_map.can_move_to(hero.pos_x, (hero.pos_y-1)):
+					hero.move("up")
+				else:
+					pass
 			elif event.key == pygame.K_s:
-				#
-				hero.move("down")
+				hero.facing = "down"
+				if my_map.can_move_to(hero.pos_x, (hero.pos_y+1)):
+					hero.move("down")
+				else:
+					pass
 
 			elif event.key == pygame.K_RETURN:
-				#
 				pass
+				#my_map.change_map(rpgMap.map_2_dir)
 
 			elif event.key == pygame.K_ESCAPE:
 				pygame.mixer.pause()
-				if rpgScene.Menu("Quit?", main_dipslay, ["Continue", "Save Game", "Quit to Desktop"]).run() == "Continue":
+				pause_menu = rpgScene.Menu("Quit?", main_dipslay, ["Continue", "Save Game", "Quit to Desktop"]).run()
+				if pause_menu == "Continue":
 					pygame.mixer.unpause()
 					render()
 					game_loop()
-				elif rpgScene.Menu("Quit?", main_dipslay, ["Continue", "Save Game", "Quit to Desktop"]).run() == "Quit to Desktop":
+				elif pause_menu == "Quit to Desktop":
 					pygame.quit()
 					quit()
 
-
-###########################
+def process_game_state():
+	if (hero.pos_x == 21) and (hero.pos_y == 17):
+		my_map.change_map(rpgMap.map_2_dir)
+		hero.pos_x = 0
+		hero.pos_y = 17
+	else:
+		pass
 
 
 def start_screen():
@@ -105,14 +123,6 @@ def start_screen():
 		pass
 		
 
-
-
-
-
-
-
-
-game_map = rpgBrains.Game_Map()
-hero = rpgBrains.Hero()
+hero = rpgHero.Hero()
 start_screen()
 pygame.quit()

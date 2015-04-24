@@ -32,8 +32,8 @@ class ImageHandler():
 	def __init__(self):
 		self.file_dir = origin_file_dict
 		self.surface_dict = {}
-		for pairs in self.file_dir.items():
-			self.surface_dict[str(pairs[0])] = pygame.image.load(str(pairs[1]))
+		# for pairs in self.file_dir.items():
+		# 	self.surface_dict[str(pairs[0])] = pygame.image.load(str(pairs[1]))
 
 	def get(self, str_key):
 		this_key = str(str_key)

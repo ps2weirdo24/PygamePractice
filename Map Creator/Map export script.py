@@ -2,6 +2,11 @@ import pygame
 
 pygame.image.get_extended()
 
+TELEPORT_TILE = "t" # This is a tile that will change the current map
+OPEN_TILE = "o" # This is a tile that can be occupied by a player
+CLOSED_TILE = "x" # This is a tile that can NOT be occupied by a player
+
+
 
 class game_map:
 
@@ -40,6 +45,23 @@ class game_map:
 		master_w = int(self.resolution[0]) * int(self.mapsize[0])
 		master_h = int(self.resolution[1]) * int(self.mapsize[1])
 
+		#constructor for map_pre_load
+
+		map_pre_load = []
+		y_axis = []
+		for x in range(int(self.mapsize[0])):
+			y_axis.append(OPEN_TILE)
+
+		this_copy = y_axis[:]
+
+		for i in range(int(self.mapsize[1])):
+			another = y_axis[:]
+			map_pre_load.append(another)
+
+		copy_list = map_pre_load[:]
+
+		#constructor for map_pre_load
+
 
 		self.master_surface = pygame.Surface((master_w,master_h))
 
@@ -55,6 +77,24 @@ class game_map:
 			wr = int(self.resolution[1])
 			self.master_surface.blit(tile_source, (wx,wy), (wq, ww, we, wr))
 
+			#
+			x_tile = int(line[3])
+			y_tile = int(line[4])
+			if int(line[0]) == 2: # TELEPORT_TILE
+				copy_list[y_tile][x_tile] = TELEPORT_TILE
+			if int(line[0]) == 3: # CLOSED_TILE
+				copy_list[int(line[4])][int(line[3])] = CLOSED_TILE
+			
+
+		# writing mapped out txt file
+
+		txt_write = open("text_render_new_map_2.txt","w")
+
+		for line in copy_list:
+			 txt_write.write("".join(line))
+			 txt_write.write("\n")
+		txt_write.close()
+		# writing mapped out txt file
 
 		pygame.image.save(self.master_surface, self.outputname)
 		print "Map Saved!"
@@ -63,13 +103,8 @@ class game_map:
 
 
 
-
-
-
-
-
-map_file_name1 = "resources/map/map_3/txtmap_3.txt"
+map_file_name1 = "new_map_2.txt"
 
 
 myscene1 = game_map()
-myscene1.load_map(map_file_name1, "mappic_3.bmp")
+myscene1.load_map(map_file_name1, "dungeon.png", "new_map_2.bmp")
