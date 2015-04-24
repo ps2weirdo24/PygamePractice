@@ -66,31 +66,37 @@ class Menu:
 					self.selection_made = True
 					
 					
-				elif event.key == pygame.K_ESCAPE:
-					pygame.quit()
-					quit()
+				# elif event.key == pygame.K_ESCAPE:
+				# 	pygame.quit()
+				# 	quit()
 
 
 	def render(self):
-		self.source_surface.blit(self.base_surface, (0,0))
-		ptext.draw(self.title, top=64, centerx=352, fontsize = 72.0, color="black")
-		loop_x = 352
-		loop_y = 256
+		x_offset = 32
+		y_offset = 32
+		self.source_surface.blit(self.base_surface, (x_offset,y_offset))
+		ptext.draw(self.title, top=(64 + y_offset), centerx=(352 + (x_offset/2)), fontsize = 72.0, color="black")
+		loop_x = (352 + (x_offset/2))
+		loop_y = (256 + y_offset)
 		for item in self.options:
 			ptext.draw(str(item), centerx=loop_x, centery=loop_y, fontsize = 48, color="black")
 			loop_y = (loop_y + 64)
-		arrow_y = (64*int(self.current_option)) + 256 - (int(self.cursor.get_height())/2)
+		arrow_y = (64*int(self.current_option)) + (256 + y_offset) - (int(self.cursor.get_height())/2)
 		arrow_x = int(loop_x - 152)
 		self.source_surface.blit(self.cursor, (arrow_x, arrow_y))
 
 
 	
 	def run(self):
+		self.source_surface.fill(pygame.Color(0, 0, 0))
+		pygame.display.update()
 		while not self.selection_made:
 			self.take_input()
 			self.render()
 			pygame.display.update()
 			Clock.tick(FPS)
+		self.source_surface.fill(pygame.Color(0, 0, 0))
+		pygame.display.update()
 		return str(self.user_selection)
 
 

@@ -40,7 +40,7 @@ class ImageHandler():
 		if self.surface_dict.has_key(this_key):
 			return self.surface_dict[this_key]
 		else:
-			print "ERROR: The key '%s' was not found in the ImageHandler Dictionary" % this_key
+			return pygame.image.load(str_key)
 
 	def get_all(self):
 		return self.file_dir
