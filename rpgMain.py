@@ -59,6 +59,7 @@ def take_input():
 			if event.key == pygame.K_a:
 				hero.facing = "left"
 				if my_map.can_move_to((hero.pos_x-1), hero.pos_y):
+					nice_move("left")
 					hero.move("left")
 				else:
 					pass
@@ -66,6 +67,7 @@ def take_input():
 			elif event.key == pygame.K_d:
 				hero.facing = "right"
 				if my_map.can_move_to((hero.pos_x+1), hero.pos_y):
+					nice_move("right")
 					hero.move("right")
 				else:
 					pass
@@ -73,12 +75,14 @@ def take_input():
 			elif event.key == pygame.K_w:
 				hero.facing = "up"
 				if my_map.can_move_to(hero.pos_x, (hero.pos_y-1)):
+					nice_move("up")
 					hero.move("up")
 				else:
 					pass
 			elif event.key == pygame.K_s:
 				hero.facing = "down"
 				if my_map.can_move_to(hero.pos_x, (hero.pos_y+1)):
+					nice_move("down")
 					hero.move("down")
 				else:
 					pass
@@ -99,12 +103,28 @@ def take_input():
 					quit()
 
 def process_game_state():
-	if (hero.pos_x == 21) and (hero.pos_y == 17):
-		my_map.change_map(rpgMap.map_2_dir)
-		hero.pos_x = 0
-		hero.pos_y = 17
-	else:
-		pass
+	# Map Teleport Test
+	if my_map.current_map == rpgMap.map_1_dir:
+		if (hero.pos_x == 21) and (hero.pos_y == 17):
+			my_map.change_map(rpgMap.map_2_dir)
+			hero.pos_x = 0
+			hero.pos_y = 17
+		else:
+			pass
+	elif my_map.current_map == rpgMap.map_2_dir:
+		if (hero.pos_x == 20) and (hero.pos_y == 18):
+			my_map.change_map(rpgMap.map_3_dir)
+			hero.pos_x = 1
+			hero.pos_y = 1
+
+	if (hero.pos_x == 2) and (hero.pos_y == 2):
+		hero.current_health = 0
+	# Death Test
+	if hero.current_health == 0:
+		game_over_scene = rpgScene.Menu("You Lose", main_dipslay, ["Press Enter to Quit", "wat"])
+		if game_over_scene == "Press Enter to Quit":
+			pygame.quit()
+			quit()
 
 
 def start_screen():
@@ -122,6 +142,34 @@ def start_screen():
 	else:
 		pass
 		
+def nice_move(direction):
+	hero.update()
+	render()
+	pygame.display.update()
+	start_x = hero.pos_x
+	start_y = hero.pos_y
+	if direction == "up":
+		for i in range(10):
+			hero.pos_y = (hero.pos_y - .1)
+			render()
+			pygame.display.update()
+	elif direction == "down":
+		for i in range(10):
+			hero.pos_y = (hero.pos_y + .1)
+			render()
+			pygame.display.update()
+	elif direction == "left":
+		for i in range(10):
+			hero.pos_x = (hero.pos_x - .1)
+			render()
+			pygame.display.update()
+	elif direction == "right":
+		for i in range(10):
+			hero.pos_x = (hero.pos_x + .1)
+			render()
+			pygame.display.update()
+	hero.pos_x = start_x
+	hero.pos_y = start_y
 
 hero = rpgHero.Hero()
 start_screen()

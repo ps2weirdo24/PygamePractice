@@ -37,6 +37,7 @@ def decode_txt(file_location):
 
 map_1_dir = ["map_1", img.get("Resources/map/map_1/img_new_map_1.bmp"), "Resources/map/map_1/txtmap_1.txt"]
 map_2_dir = ["map_2", img.get("Resources/map/map_2/img_new_map_2.bmp"), "Resources/map/map_2/txtmap_2.txt"]
+map_3_dir = ["map_3", img.get("Resources/map/map_3/img_new_map_3.bmp"), "Resources/map/map_3/txtmap_3.txt"]
 
 class MapHandler:
 	def __init__(self):
@@ -66,6 +67,14 @@ class MapHandler:
 			elif (can_move_test == "o") or (can_move_test == "t"):
 				return True
 
+
+	def is_teleport(self, pos_x,pos_y):
+		can_tele_test = self.layout[pos_x][pos_y]
+		if can_tele_test == "t":
+			return True
+		else:
+			return False
+
 	def change_map(self, new_map):
 		self.current_map = new_map
 		self.layout = decode_txt(self.current_map[2])
@@ -79,6 +88,3 @@ class MapHandler:
 if __name__=="__main__":
 	debug = MapHandler()
 
-	print debug.can_move_to(0,18)
-	debug.change_map(map_2_dir)
-	print debug.can_move_to(0,18)

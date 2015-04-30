@@ -103,8 +103,8 @@ class game_map:
 
 
 
-map_file_name1 = "new_map_2.txt"
+map_file_name1 = "map5.txt"
 
 
 myscene1 = game_map()
-myscene1.load_map(map_file_name1, "dungeon.png", "new_map_2.bmp")
+myscene1.load_map(map_file_name1, "dungeon.png", "map5.bmp")
